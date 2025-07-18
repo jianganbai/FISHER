@@ -6,7 +6,7 @@
 </h1>
 
 <div style="text-align: center;">
-    <img src="assets/rmis_score.png" alt="Model Performances on the RMIS Benchmark" style="width:60%; ">
+    <img src="assets/rmis_curve.png" alt="Model Performances on the RMIS Benchmark" style="width:60%; ">
 </div>
 
 ## 🔥🔥🔥 Updates
