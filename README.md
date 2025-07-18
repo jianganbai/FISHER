@@ -1,11 +1,16 @@
 <!-- <h1 style="text-align: center;">FISHER</h1> -->
 
-<h1 style="display: flex; align-items: center; justify-content: center;">
+<!-- <h1 style="display: flex; align-items: center; justify-content: center;">
   <img src="assets/icon.jpg" alt="icon" style="width:5%; max-width: 50px">
+  <span style="margin-left: 10px">FISHER</span>
+</h1> -->
+
+<h1 align="center">
+  <img src="assets/icon.jpg" alt="icon" style="width:4.5%; max-width: 50px">
   <span style="margin-left: 10px">FISHER</span>
 </h1>
 
-<div style="text-align: center;">
+<div align="center">
     <img src="assets/rmis_curve.png" alt="Model Performances on the RMIS Benchmark" style="width:60%; ">
 </div>
 
