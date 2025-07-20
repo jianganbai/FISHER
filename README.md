@@ -32,9 +32,9 @@ We release the checkpoints of FISHER-tiny, FISHER-mini and FISHER-small.
 
 | Version| 📦 Google Drive| ☁️ Tsinghua Cloud|
 |------------| :------------: | :--------: |
-| FISHER-tiny | [Link]() | [Link]() |
-| FISHER-mini | [Link]() | [Link]() |
-| FISHER-small | [Link]() | [Link]() |
+| FISHER-tiny | [Link](https://drive.google.com/file/d/1E5TcIT7CWo7tZ4gaPuwyELYIWIOakbrk/view?usp=sharing) | [Link](https://cloud.tsinghua.edu.cn/f/630a4b1b2962481a9150/?dl=1) |
+| FISHER-mini | [Link](https://drive.google.com/file/d/1L3RMosuluqpceVMw8YYIpr-JvDvLAAL8/view?usp=sharing) | [Link](https://cloud.tsinghua.edu.cn/f/60b3bfc0977f45f48dff/?dl=1) |
+| FISHER-small | [Link](https://drive.google.com/file/d/17EoHe_KSzarDnyPe-XeZINlRWaOxYWd0/view?usp=sharing) | [Link](https://cloud.tsinghua.edu.cn/f/f997a6932b614046915e/?dl=1) |
 
 
 ## Inference
