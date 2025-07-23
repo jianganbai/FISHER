@@ -1,7 +1,21 @@
 <h1 align="center">
-  <img src="assets/icon.jpg" alt="icon" style="width:5.5%; max-width: 80px">
+  <img src="assets/icon.jpg" alt="icon" style="width:6%; max-width: 100px">
   <span style="margin-left: 10px">FISHER</span>
 </h1>
+
+<div align="center">
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/Python-3.10%2B-orange?logo=python" alt="Python">
+  </a>
+  <a href="https://pytorch.org/">
+    <img src="https://img.shields.io/badge/PyTorch-2.1%2B-brightgreen?logo=pytorch" alt="PyTorch">
+  </a>
+  <a href="https://arxiv.org/abs/2507.16696">
+    <img src="https://img.shields.io/badge/arXiv-2507.16696-blueviolet?logo=arxiv" alt="arXiv">
+  </a>
+</div>
+
+<br>
 
 <div align="center">
     <img src="assets/rmis_curve.png" alt="Model Performances on the RMIS Benchmark" style="width:55%; max-width: 1000px">
@@ -13,7 +27,7 @@
 
 ## Introduction
 
-<div style="text-align: center;">
+<div align="center">
     <img src="assets/model_pipe.png" alt="Model Performances on the RMIS Benchmark" style="width:100%; max-width: 1500px">
 </div>
 
@@ -86,6 +100,10 @@ FISHER is developed based on [EAT](https://github.com/cwx-worst-one/EAT) and [fa
 If you find FISHER useful, please cite the following paper.
 
 ```bibtex
-
-
+@article{fan2025fisher,
+  title={FISHER: A Foundation Model for Multi-Modal Industrial Signal Comprehensive Representation},
+  author={Fan, Pingyi and Jiang, Anbai and Zhang, Shuwei and Lv, Zhiqiang and Han, Bing and Zheng, Xinhu and Liang, Wenrui and Li, Junjie and Zhang, Wei-Qiang and Qian, Yanmin and Chen, Xie and Lu, Cheng and Liu, Jia},
+  journal={arXiv preprint arXiv:2507.16696},
+  year={2025}
+}
 ```
