@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import Callable, Dict, Optional
 from enum import Enum, auto
 from einops import rearrange
+from omegaconf import II
 
 from .mae import get_2d_sincos_pos_embed_flexible, PatchEmbed_new
 
@@ -33,9 +34,9 @@ class D2vImageConfig(D2vModalityConfig):
     type: Modality = Modality.IMAGE
 
     input_size: int = 224
-    in_chans: int = 3
+    in_chans: int = 1
     patch_size: int = 16
-    embed_dim: int = 768
+    embed_dim: int = II('model.embed_dim')
 
     alibi_dims: int = 2
     alibi_distance: str = "manhattan"
@@ -45,10 +46,10 @@ class D2vImageConfig(D2vModalityConfig):
     transformer_decoder: bool = False
     enc_dec_transformer: bool = False
     target_length: int = 1024
-    max_length: int = 768  # 64 for 10s
-    max_freq: int = 400
+    max_length: int = 128
+    max_freq: int = 50
 
-    band_width: int = 50
+    band_width: int = II('model.band_width')
     flatten: str = 'freq'  # 'time', 'freq'
 
 

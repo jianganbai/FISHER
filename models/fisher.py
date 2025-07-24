@@ -4,14 +4,12 @@ import numpy as np
 import torch.nn as nn
 
 from functools import partial
-from enum import Enum, auto
 from einops import rearrange
 from typing import Callable, Optional
 from dataclasses import dataclass, field, is_dataclass
 
 
 from .base import (
-    MaskSeed,
     D2vModalityConfig,
     ModalitySpecificEncoder,
 )
@@ -26,12 +24,6 @@ from .images import (
 logger = logging.getLogger(__name__)
 
 
-class Modality(Enum):
-    AUDIO = auto()
-    IMAGE = auto()
-    TEXT = auto()
-
-
 @dataclass
 class D2vModalitiesConfig:
     image: D2vImageConfig = field(default_factory=lambda *args: D2vImageConfig())
@@ -42,22 +34,22 @@ class Data2VecMultiConfig:
     depth: int = 12
 
     # band split
-    band_width: int = 50
+    band_width: int = 100
 
     # standard vision Transformer
-    start_drop_path_rate: float = 0
-    end_drop_path_rate: float = 0
+    start_drop_path_rate: float = 0.0
+    end_drop_path_rate: float = 0.0
     num_heads: int = 12
     norm_eps: float = 1e-6
     norm_affine: bool = True
-    encoder_dropout: float = 0.1
-    post_mlp_drop: float = 0.1
-    attention_dropout: float = 0.1
+    encoder_dropout: float = 0.0
+    post_mlp_drop: float = 0.0
+    attention_dropout: float = 0.0
     activation_dropout: float = 0.0
     dropout_input: float = 0.0
     layerdrop: float = 0.0
     embed_dim: int = 768
-    mlp_ratio: float = 4
+    mlp_ratio: float = 4.0
     layer_norm_first: bool = False
 
     end_of_block_targets: bool = False
@@ -69,9 +61,9 @@ class Data2VecMultiConfig:
     # normalization for teacher Transformer layer output
     layer_norm_target_layer: bool = False
     batch_norm_target_layer: bool = False
-    instance_norm_target_layer: bool = False
+    instance_norm_target_layer: bool = True
     instance_norm_targets: bool = False
-    layer_norm_targets: bool = False
+    layer_norm_targets: bool = True
 
     modalities: D2vModalitiesConfig = field(default_factory=lambda *args: D2vModalitiesConfig())
 
@@ -104,17 +96,16 @@ class FISHER(nn.Module):
         self.alibi_biases = {}
         self.modality_encoders = nn.ModuleDict()
 
-        for mod in cfg.modalities.__dataclass_fields__.values():
-            mod_cfg = getattr(cfg.modalities, mod.name.lower())
-            enc = self.make_modality_encoder(
-                mod_cfg,
-                cfg.embed_dim,
-                make_block,
-                make_layer_norm,
-                cfg.layer_norm_first,
-                self.alibi_biases,
-            )
-            self.modality_encoders[mod.name.upper()] = enc
+        mod_cfg = getattr(cfg.modalities, 'image')
+        enc = self.make_modality_encoder(
+            mod_cfg,
+            cfg.embed_dim,
+            make_block,
+            make_layer_norm,
+            cfg.layer_norm_first,
+            self.alibi_biases,
+        )
+        self.modality_encoders['IMAGE'] = enc
 
         self.dropout_input = nn.Dropout(cfg.dropout_input)
 
@@ -201,9 +192,6 @@ class FISHER(nn.Module):
         remove_extra_tokens: bool = True,
         precomputed_mask: Optional[torch.Tensor] = None,
     ):
-        if isinstance(mode, Modality):
-            mode = mode.name
-
         # band split
         num_band = source.shape[-1] // self.band_width
         source = torch.stack(source.split(self.band_width, dim=-1)[:num_band])  # drop residual
@@ -212,10 +200,6 @@ class FISHER(nn.Module):
 
         feature_extractor = self.modality_encoders[mode]  # models.images.ImageEncoder
 
-        mask_seeds = None
-        if id is not None:
-            mask_seeds = MaskSeed(seed=self.cfg.seed, update=self.num_updates, ids=id)
-
         # extract (unmasked) features using CNN encoder
         extractor_out = feature_extractor(
             source,
@@ -223,7 +207,7 @@ class FISHER(nn.Module):
             mask,
             remove_masked=not features_only or force_remove_masked,  # train: True; infer: False
             clone_batch=clone_batch if not features_only else 1,
-            mask_seeds=mask_seeds,
+            mask_seeds=None,
             precomputed_mask=precomputed_mask,
         )
 

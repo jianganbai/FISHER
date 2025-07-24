@@ -1,1 +1,4 @@
 ckpt/
+hf*
+demo*
+__pycache__

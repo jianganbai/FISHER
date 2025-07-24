@@ -1,8 +1,3 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
-#
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -34,22 +29,6 @@ class FixedPositionalEncoder(nn.Module):
 
     def forward(self, x, padding_mask):
         return self.positions
-
-
-class TextFeatPositionalEncoder(nn.Module):
-    """
-    Original encoder expects (B, T) long input. This module wraps it to take
-    local_encoder output which are (B, T, D) float tensors
-    """
-
-    def __init__(self, pos_encoder):
-        super().__init__()
-        self.pos_encoder = pos_encoder
-
-    def forward(self, x, padding_mask):
-        # assume padded token embeddings are 0s
-        # TODO: consider using padding_mask as input
-        return self.pos_encoder(x[..., 0])
 
 
 class BlockEncoder(nn.Module):

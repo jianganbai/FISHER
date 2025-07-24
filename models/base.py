@@ -26,21 +26,21 @@ class Modality(Enum):
 @dataclass
 class D2vModalityConfig:
     type: Modality = MISSING
-    prenet_depth: int = 4
-    prenet_layerdrop: float = 0
-    prenet_dropout: float = 0
-    start_drop_path_rate: float = 0
-    end_drop_path_rate: float = 0
+    prenet_depth: int = 0
+    prenet_layerdrop: float = 0.0
+    prenet_dropout: float = 0.0
+    start_drop_path_rate: float = 0.0
+    end_drop_path_rate: float = 0.0
 
-    num_extra_tokens: int = 0
-    init_extra_token_zero: bool = True
+    num_extra_tokens: int = 1
+    init_extra_token_zero: bool = False
 
     mask_noise_std: float = 0.01
     mask_prob_min: Optional[float] = None
-    mask_prob: float = 0.7
+    mask_prob: float = 0.8
     inverse_mask: bool = True
-    mask_prob_adjust: float = 0
-    keep_masked_pct: float = 0
+    mask_prob_adjust: float = 0.07
+    keep_masked_pct: float = 0.0
     flexible_mask: bool = False
 
     mask_length: int = 5
@@ -56,8 +56,8 @@ class D2vModalityConfig:
     ema_local_decoder: bool = False
     local_grad_mult: float = 1.0
     flatten: str = 'freq'
-    max_length: int = 768
-    max_freq: int = 400
+    max_length: int = 128
+    max_freq: int = 50
 
     use_alibi_encoder: bool = False
     alibi_scale: float = 1.0
