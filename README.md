@@ -13,6 +13,9 @@
   <a href="https://arxiv.org/abs/2507.16696">
     <img src="https://img.shields.io/badge/arXiv-2507.16696-blueviolet?logo=arxiv" alt="arXiv">
   </a>
+  <a href="https://huggingface.co/collections/jiangab/fisher-688311579256529052be91a2">
+    <img src="https://img.shields.io/badge/HuggingFace-FISHER-yellow?logo=huggingface" alt="huggingface">
+  </a>
 </div>
 
 <br>
@@ -22,6 +25,8 @@
 </div>
 
 ## 🔥🔥🔥 Updates
+
+- [2025.7.25] FISHER is now integrated on HuggingFace🤗.
 
 - [2025.7.23] We release the inference code and checkpoints for tiny, mini and small.
 
@@ -39,12 +44,11 @@ To evaluate the model, we develop the RMIS benchmark, which will also be open-so
 
 We release the checkpoints of FISHER-tiny, FISHER-mini and FISHER-small.
 
-| Version| 📦 Google Drive| ☁️ Tsinghua Cloud|
-|------------| :------------: | :--------: |
-| FISHER-tiny | [Link](https://drive.google.com/file/d/1-_VQlp-LskhdaWk-n8LXVsmhcyalk6oU/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/630a4b1b2962481a9150/?dl=1) |
-| FISHER-mini | [Link](https://drive.google.com/file/d/1fsEs70Eu1LtF2NpR6sG-wDbyAuYeTyZv/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/60b3bfc0977f45f48dff/?dl=1) |
-| FISHER-small | [Link](https://drive.google.com/file/d/1vPeAnz-q8NpI7OwxDulbFPE5ftVzfqxS/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/f997a6932b614046915e/?dl=1) |
-
+| Version| 📦 Google Drive | ☁️ Tsinghua Cloud | 🤗 HuggingFace |
+|------------| :------------: | :--------: | :--------: |
+| FISHER-tiny | [Link](https://drive.google.com/file/d/1-_VQlp-LskhdaWk-n8LXVsmhcyalk6oU/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/630a4b1b2962481a9150/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-tiny-0723) |
+| FISHER-mini | [Link](https://drive.google.com/file/d/1fsEs70Eu1LtF2NpR6sG-wDbyAuYeTyZv/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/60b3bfc0977f45f48dff/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-mini-0723) |
+| FISHER-small | [Link](https://drive.google.com/file/d/1vPeAnz-q8NpI7OwxDulbFPE5ftVzfqxS/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/f997a6932b614046915e/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-small-0723) |
 
 ## Inference
 
