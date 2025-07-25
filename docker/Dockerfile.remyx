@@ -1,0 +1,98 @@
+# syntax=docker/dockerfile:1.4
+
+FROM pytorch/pytorch:2.3.0-cuda12.1-cudnn8-devel
+
+ENV CUDA_HOME=/usr/local/cuda-12.1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+    einops \
+    timm \
+    omegaconf
+
+WORKDIR /app
+
+RUN git clone https://github.com/jianganbai/FISHER.git . \
+ && curl -L -o models/fisher-tiny.pt \
+    'https://cloud.tsinghua.edu.cn/f/630a4b1b2962481a9150/?dl=1'
+
+COPY --chmod=755 <<'PYTHON' /app/run_demo.py
+#!/usr/bin/env python
+import torch
+import torchaudio
+import torch.nn.functional as F
+import numpy as np
+import sys
+from models.fisher import FISHER
+
+# 1. Generate a dummy wav file for the demo
+print("--- Generating a dummy audio file ---")
+sample_rate = 16000
+duration_s = 5
+frequency = 440
+num_samples = int(sample_rate * duration_s)
+time = torch.linspace(0., duration_s, num_samples)
+amplitude = int(torch.iinfo(torch.int16).max * 0.5)
+waveform = (amplitude * torch.sin(2 * torch.pi * frequency * time)).unsqueeze(0)
+
+WAV_PATH = "dummy_signal.wav"
+torchaudio.save(WAV_PATH, waveform.to(torch.int16), sample_rate)
+print(f"Generated dummy audio file at: {WAV_PATH}")
+
+# 2. Run the inference code from the repository's README
+print("\n--- Running FISHER Inference Demo ---")
+
+if not torch.cuda.is_available():
+    print("ERROR: CUDA is not available. This demo requires a GPU.", file=sys.stderr)
+    sys.exit(1)
+
+wav, sr = torchaudio.load(WAV_PATH)
+
+# Preprocessing from README
+wav = wav - wav.mean()
+STFT = torchaudio.transforms.Spectrogram(
+    n_fft=25 * sr // 1000,
+    win_length=None,
+    hop_length=10 * sr // 1000,
+    power=1,
+    center=False
+)
+spec = torch.log(torch.abs(STFT(wav)) + 1e-10)
+spec = spec.transpose(-2, -1)  # [1, time, freq]
+# Normalization constants from README
+spec = (spec + 3.017344307886898) / (2.1531635155379805 * 2)
+
+model_path = 'models/fisher-tiny.pt'  # Use the downloaded checkpoint
+print(f"Loading model from: {model_path}")
+model = FISHER.from_pretrained(model_path)
+model = model.cuda()
+model.eval()
+print("Model loaded successfully.")
+
+# Prepare tensor for model input
+# time-wise cutoff
+if spec.shape[-2] > 1024:
+    spec = spec[:, :1024]
+# freq-wise padding
+if spec.shape[-1] < model.cfg.band_width:
+    spec = F.pad(spec, (0, model.cfg.band_width - spec.shape[-1]))
+spec = spec.unsqueeze(1).cuda()
+
+print(f"Input spec shape for model: {spec.shape}")
+
+# Run inference
+with torch.no_grad():
+    # Use autocast for mixed precision inference, as recommended
+    with torch.autocast('cuda'):
+        repre = model.extract_features(spec)
+
+print("\n--- Inference Complete ---")
+print(f"Successfully extracted features.")
+print(f"Output representation shape: {repre.shape}")
+PYTHON
+
+CMD ["/app/run_demo.py"]
