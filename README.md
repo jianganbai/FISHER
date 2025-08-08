@@ -44,11 +44,11 @@ To evaluate the model, we develop the RMIS benchmark, which will also be open-so
 
 We release the checkpoints of FISHER-tiny, FISHER-mini and FISHER-small.
 
-| Version| 📦 Google Drive | ☁️ Tsinghua Cloud | 🤗 HuggingFace |
+| Version| ☁️ Tsinghua Cloud | 🤗 HuggingFace | wisemodel
 |------------| :------------: | :--------: | :--------: |
-| FISHER-tiny | [Link](https://drive.google.com/file/d/1-_VQlp-LskhdaWk-n8LXVsmhcyalk6oU/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/630a4b1b2962481a9150/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-tiny-0723) |
-| FISHER-mini | [Link](https://drive.google.com/file/d/1fsEs70Eu1LtF2NpR6sG-wDbyAuYeTyZv/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/60b3bfc0977f45f48dff/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-mini-0723) |
-| FISHER-small | [Link](https://drive.google.com/file/d/1vPeAnz-q8NpI7OwxDulbFPE5ftVzfqxS/view?usp=drive_link) | [Link](https://cloud.tsinghua.edu.cn/f/f997a6932b614046915e/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-small-0723) |
+| FISHER-tiny | [Link](https://cloud.tsinghua.edu.cn/f/630a4b1b2962481a9150/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-tiny-0723) | [Link](https://wisemodel.cn/models/jiangab/FISHER-tiny-0723)
+| FISHER-mini | [Link](https://cloud.tsinghua.edu.cn/f/60b3bfc0977f45f48dff/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-mini-0723) | [Link](https://wisemodel.cn/models/jiangab/FISHER-mini-0723)
+| FISHER-small | [Link](https://cloud.tsinghua.edu.cn/f/f997a6932b614046915e/?dl=1) | [Link](https://huggingface.co/jiangab/FISHER-small-0723) | [Link](https://wisemodel.cn/models/jiangab/FISHER-small-0723)
 
 ## Inference
 
