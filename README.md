@@ -26,6 +26,8 @@
 
 ## 🔥🔥🔥 Updates
 
+- [2026.2.13] We are excited to release the [RMIS](https://github.com/jianganbai/RMIS) codebase.
+
 - [2025.7.25] FISHER is now integrated on HuggingFace🤗.
 
 - [2025.7.23] We release the inference code and checkpoints for tiny, mini and small.
