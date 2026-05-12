@@ -40,7 +40,7 @@
 
 FISHER is a **F**oundation model for **I**ndustrial **S**ignal compre**HE**nsive **R**epresentation, which models heterogeneous industrial signals (sound, vibration, voltage, etc.) in a unified manner. FISHER accepts arbitrary sampling rates and models the increment of sampling rate as the concatenation of sub-band information, which first splits a STFT spectrogram into sub-bands before processsing it by the ViT encoder. FISHER is trained by teacher student EMA self-distillation.
 
-To evaluate the model, we develop the RMIS benchmark, which will also be open-sourced in the near future. FISHER achieves the SOTA performances on the RMIS benchmark with much more efficient scaling properties.
+To evaluate the model, we have developed the [RMIS benchmark](https://jianganbai.github.io/RMIS), where FISHER achieves the SOTA performances with much more efficient scaling properties.
 
 ## Checkpoints
 
