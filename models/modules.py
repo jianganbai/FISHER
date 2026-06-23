@@ -151,18 +151,12 @@ class AltAttention(nn.Module):
         self.num_heads = num_heads
         head_dim = dim // num_heads
         self.scale = qk_scale or head_dim ** -0.5
+        assert cosine_attention is False
 
         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.attn_drop = nn.Dropout(attn_drop)
         self.proj = nn.Linear(dim, dim)
         self.proj_drop = nn.Dropout(proj_drop)
-
-        self.cosine_attention = cosine_attention
-
-        if cosine_attention:
-            self.logit_scale = nn.Parameter(
-                torch.log(10 * torch.ones((num_heads, 1, 1))), requires_grad=True
-            )
 
     def forward(self, x, padding_mask=None, alibi_bias=None):
         B, N, C = x.shape
@@ -171,39 +165,23 @@ class AltAttention(nn.Module):
             .reshape(B, N, 3, self.num_heads, C // self.num_heads)
             .permute(2, 0, 3, 1, 4)  # qkv x B x H x L x D
         )
-        q, k, v = (
-            qkv[0],
-            qkv[1],
-            qkv[2],
-        )  # make torchscript happy (cannot use tensor as tuple)
+        q, k, v = qkv[0], qkv[1], qkv[2]  # (B, H, N, D)
 
-        dtype = q.dtype
-
-        if self.cosine_attention:
-            # cosine attention
-            attn = F.normalize(q, dim=-1) @ F.normalize(k, dim=-1).transpose(-2, -1)
-            logit_scale = torch.clamp(
-                self.logit_scale, max=torch.log(torch.tensor(1.0 / 0.01))
-            ).exp()
-            attn = attn * logit_scale
-        else:
-            q = q * self.scale
-            attn = q @ k.transpose(-2, -1)
-
-        if alibi_bias is not None:
-            attn = attn.type_as(alibi_bias)
-            attn[:, : alibi_bias.size(1)] += alibi_bias
-
+        # key padding mask: True for preserve, False for padding
         if padding_mask is not None and padding_mask.any():
-            attn = attn.masked_fill(
-                padding_mask.unsqueeze(1).unsqueeze(2).to(torch.bool),
-                float("-inf"),
-            )
+            key_padding_mask = ~padding_mask  # (B, N)
+        else:
+            key_padding_mask = None
 
-        attn = attn.softmax(dim=-1, dtype=torch.float32).to(dtype=dtype)
-        attn = self.attn_drop(attn)
-        x = (attn @ v).transpose(1, 2)  #
-        x = x.reshape(B, N, C)
+        # use pytorch SDPA, auto select Flash Attention
+        x = F.scaled_dot_product_attention(
+            q, k, v,
+            attn_mask=key_padding_mask,
+            dropout_p=self.attn_drop.p if self.training else 0.0,
+            scale=self.scale,
+        )  # (B, H, N, D)
+
+        x = x.transpose(1, 2).reshape(B, N, C)
         x = self.proj(x)
         x = self.proj_drop(x)
         return x
