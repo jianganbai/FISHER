@@ -13,7 +13,7 @@
   <a href="https://arxiv.org/abs/2507.16696">
     <img src="https://img.shields.io/badge/arXiv-2507.16696-blueviolet?logo=arxiv" alt="arXiv">
   </a>
-  <a href="https://huggingface.co/collections/jiangab/fisher-688311579256529052be91a2">
+  <a href="https://huggingface.co/collections/jiangab/fisher">
     <img src="https://img.shields.io/badge/HuggingFace-FISHER-yellow?logo=huggingface" alt="huggingface">
   </a>
 </div>
@@ -21,21 +21,23 @@
 <br>
 
 <div align="center">
-    <img src="assets/rmis_curve.png" alt="Model Performances on the RMIS Benchmark" style="width:55%; max-width: 1000px">
+    <img src="assets/rmis_curve.png" alt="Model Performances on the RMIS Benchmark" style="width:85%; max-width: 2000px">
 </div>
 
 ## 🔥🔥🔥 Updates
 
+- [2026.6.23] FISHER has been accepted by IEEE TII. We have largely enlarged the experiment part. Please read the [final version](https://ieeexplore.ieee.org/abstract/document/11563541) for recent updates.
+
 - [2026.2.13] We are excited to release the [RMIS](https://github.com/jianganbai/RMIS) codebase.
 
-- [2025.7.25] FISHER is now integrated on HuggingFace🤗.
+- [2025.7.25] FISHER is now integrated on [HuggingFace🤗](https://huggingface.co/collections/jiangab/fisher).
 
 - [2025.7.23] We release the inference code and checkpoints for tiny, mini and small.
 
 ## Introduction
 
 <div align="center">
-    <img src="assets/model_pipe.png" alt="Model Performances on the RMIS Benchmark" style="width:100%; max-width: 1500px">
+    <img src="assets/model_pipe.png" alt="Model Performances on the RMIS Benchmark" style="width:80%; max-width: 1000px">
 </div>
 
 FISHER is a **F**oundation model for **I**ndustrial **S**ignal compre**HE**nsive **R**epresentation, which models heterogeneous industrial signals (sound, vibration, voltage, etc.) in a unified manner. FISHER accepts arbitrary sampling rates and models the increment of sampling rate as the concatenation of sub-band information, which first splits a STFT spectrogram into sub-bands before processsing it by the ViT encoder. FISHER is trained by teacher student EMA self-distillation.
@@ -106,10 +108,14 @@ FISHER is developed based on [EAT](https://github.com/cwx-worst-one/EAT) and [fa
 If you find FISHER useful, please cite the following paper.
 
 ```bibtex
-@article{fan2025fisher,
-  title={FISHER: A Foundation Model for Multi-Modal Industrial Signal Comprehensive Representation},
-  author={Fan, Pingyi and Jiang, Anbai and Zhang, Shuwei and Lv, Zhiqiang and Han, Bing and Zheng, Xinhu and Liang, Wenrui and Li, Junjie and Zhang, Wei-Qiang and Qian, Yanmin and Chen, Xie and Lu, Cheng and Liu, Jia},
-  journal={arXiv preprint arXiv:2507.16696},
-  year={2025}
-}
+@ARTICLE{11563541,
+  author={Fan, Pingyi and Jiang, Anbai and Zhang, Shuwei and Zheng, Xinhu and Lv, Zhiqiang and Han, Bing and Liang, Wenrui and Li, Junjie and Zhang, Wei-Qiang and Qian, Yanmin and Chen, Xie and Liu, Jia},
+  journal={IEEE Transactions on Industrial Informatics}, 
+  title={FISHER: A Foundation Model for Multimodal Industrial Signal Comprehensive Representation}, 
+  year={2026},
+  volume={},
+  number={},
+  pages={1-12},
+  keywords={Modeling;Educational institutions;Fault diagnosis;Training;Foundation models;Timing;Speech;Machining;Signal detection;Cloning;Anomaly detection;fault diagnosis;foundation model;multimodal},
+  doi={10.1109/TII.2026.3698554}}
 ```
